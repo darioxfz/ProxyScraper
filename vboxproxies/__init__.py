@@ -6,7 +6,7 @@ from multiprocessing import Pool,cpu_count
 from tqdm import tqdm
 from time import sleep
 
-
+url = ''
 session = requests.session()
 def about():
     print("Created by...")
@@ -15,7 +15,9 @@ def about():
     print("import vboxproxies as vb")
     print("proxies = vb.getProxies(10)")
     print("returns a list of working proxies and checks with 10 threads")
-def getProxies(t):
+def getProxies(u,t):
+    global url
+    url = u
     proxies = get()
     ret=[]
     with Pool(t) as p:
@@ -27,7 +29,7 @@ def getProxies(t):
 def proxyCheck(p):
     try:
         with session as s:
-            r = s.get('https://google.co.uk', proxies={'https' :p}, timeout=1)
+            r = s.get(url, proxies={'https' :p, 'http':p}, timeout=1)
             if r.status_code == 200:
                 return True
             else:
