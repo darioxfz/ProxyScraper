@@ -13,7 +13,7 @@ def about():
     print("                ¸„»°'´¸„»°'´Vorticalbox `'°«„¸`'°«„¸")
     print("`'°«„¸¸„»°'´¸„»°'´`'°«„¸Scientia Potentia est ¸„»°'´`'°«„¸`'°«„¸¸„»°'´")
     print("import vboxproxies as vb")
-    print("proxies = vb.getProxies(10)")
+    print("proxies = vb.getProxies('http://target.com',10)")
     print("returns a list of working proxies and checks with 10 threads")
 def getProxies(u,t):
     global url
@@ -21,7 +21,7 @@ def getProxies(u,t):
     proxies = get()
     ret=[]
     with Pool(t) as p:
-        print("checking proxies with {0} threads".format(t))
+        print("checking proxies against {0} with {1} threads".format(url,t))
         for i in tqdm(p.imap_unordered(proxyCheck, proxies), total=len(proxies)):
             ret.append(i)
     proxies = list(compress(proxies, ret))

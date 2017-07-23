@@ -8,6 +8,6 @@ module for a quick why to return a list of working proxies
 
 #usage 
 import vboxproxies as vb
-using 50 threads get proxies
-proxies = vb.getProxies(50)
+using 50 threads get proxies and chek agaisnt google
+proxies = vb.getProxies('http(s)://google.co.uk', 50)
 prxies now contains a list of working proxies
