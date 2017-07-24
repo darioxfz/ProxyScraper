@@ -1,37 +1,33 @@
 #!/usr/bin/python3
 import requests
 from bs4 import BeautifulSoup as bs
-from itertools import compress
 from multiprocessing import Pool,cpu_count
 from tqdm import tqdm
-from time import sleep
 
 url = ''
 session = requests.session()
 def about():
-    print("Created by...")
+    print("Proxy Scraper by...")
     print("                ¸„»°'´¸„»°'´Vorticalbox `'°«„¸`'°«„¸")
     print("`'°«„¸¸„»°'´¸„»°'´`'°«„¸Scientia Potentia est ¸„»°'´`'°«„¸`'°«„¸¸„»°'´")
-    print("import vboxproxies as vb")
-    print("proxies = vb.getProxies('http://target.com',10)")
-    print("returns a list of working proxies and checks with 10 threads")
 def getProxies(u,t):
+    about()
     global url
     url = u
     proxies = get()
-    ret=[]
+    working = []
     with Pool(t) as p:
         print("checking proxies against {0} with {1} threads".format(url,t))
-        for i in tqdm(p.map(proxyCheck, proxies), total=len(proxies)):
-            ret.append(i)
-    proxies = list(compress(proxies, ret))
-    return proxies
+        for i in tqdm(p.imap_unordered(proxyCheck, proxies), total=len(proxies)):
+            if i != False:
+                working.append(i)
+    return working
 def proxyCheck(p):
     try:
         with session as s:
             r = s.get(url, proxies={'https' :p, 'http':p}, timeout=1)
             if r.status_code == 200:
-                return True
+                return p
             else:
                 return False
     except:
