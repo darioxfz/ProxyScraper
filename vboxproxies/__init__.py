@@ -22,7 +22,7 @@ def getProxies(u,t):
     ret=[]
     with Pool(t) as p:
         print("checking proxies against {0} with {1} threads".format(url,t))
-        for i in tqdm(p.imap_unordered(proxyCheck, proxies), total=len(proxies)):
+        for i in tqdm(p.map(proxyCheck, proxies), total=len(proxies)):
             ret.append(i)
     proxies = list(compress(proxies, ret))
     return proxies
