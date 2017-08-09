@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import requests
 from bs4 import BeautifulSoup as bs
-from multiprocessing import Pool,cpu_count
+from multiprocessing import Pool
 from tqdm import tqdm
 
 url = ''
