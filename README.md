@@ -9,4 +9,5 @@ module for a quick why to return a list of working proxies
 #usage 
 
 import proxyScraper as ps
+
 proxies = ps.getProxies('http(s)://google.co.uk', 50)
